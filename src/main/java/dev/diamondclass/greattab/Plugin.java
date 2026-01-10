@@ -8,7 +8,7 @@ public class Plugin extends JavaPlugin {
     @Override
     public void onEnable() {
         getLogger().info(CC.translate("&7&m-----------------------------"));
-        getLogger().info(CC.translate("&b&lGreatTabs"));
+        getLogger().info(CC.translate("&b&lGreatTab"));
         getLogger().info(CC.translate("&7"));
         getLogger().info(CC.translate("&7Author: " + this.getDescription().getAuthors()));
         getLogger().info(CC.translate("&7Version: " + this.getDescription().getVersion()));
@@ -20,7 +20,7 @@ public class Plugin extends JavaPlugin {
     @Override
     public void onDisable() {
         getLogger().info(CC.translate("&7&m-----------------------------"));
-        getLogger().info(CC.translate("&b&lGreatTabs"));
+        getLogger().info(CC.translate("&b&lGreatTab"));
         getLogger().info(CC.translate("&7"));
         getLogger().info(CC.translate("&7Author: " + this.getDescription().getAuthors()));
         getLogger().info(CC.translate("&7Version: " + this.getDescription().getVersion()));
