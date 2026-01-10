@@ -1,6 +1,6 @@
 name: GreatTabs
 version: ${version}
 main: dev.diamondclass.greattabs.GreatTabs
-authors: [diamondclass]
+authors: [Citymoon Dynamics]
 description: A tablist plugin for my own purposes.
 depend: [PlaceholderAPI]
