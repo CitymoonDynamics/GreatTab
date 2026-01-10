@@ -12,8 +12,8 @@ Proof of concept about a tab plugin
 
 ## To-do
 
-- [ ] Finish the HCF layout system.
-- [ ] Add tablist system (ofc)
+- [X] Finish the HCF layout system.
+- [X] Add tablist system (ofc)
 - [ ] Add scoreboard system
 - [ ] Add actionbar system
 - [ ] Add title system

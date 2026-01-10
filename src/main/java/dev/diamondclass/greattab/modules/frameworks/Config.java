@@ -11,6 +11,11 @@ import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * This class handles everything related to .yml files.
+ * It doesn't just load data; it also automatically handles global placeholders,
+ * prefixes, and animations whenever you request a string.
+ */
 @Getter
 public class Config {
 
@@ -26,6 +31,8 @@ public class Config {
         this.createFile();
     }
 
+    // If the file doesn't exist, we'll create it using the resource bundled in the
+    // .jar
     private void createFile() {
         if (!file.exists()) {
             file.getParentFile().mkdirs();
@@ -34,6 +41,7 @@ public class Config {
         configuration = YamlConfiguration.loadConfiguration(file);
     }
 
+    // Saves any changes we've made in memory back to the physical file
     public void save() {
         try {
             configuration.save(file);
@@ -42,10 +50,18 @@ public class Config {
         }
     }
 
+    // Reloads the file from disk to refresh the memory with new data
     public void reload() {
         configuration = YamlConfiguration.loadConfiguration(file);
     }
 
+    /**
+     * Gets a string and applies all the "magic" processing:
+     * - Replaces %prefix% with the global prefix.
+     * - Replaces custom variables defined in config.yml.
+     * - Processes animations if the AnimationManager is ready.
+     * - Translates colors (including Hex).
+     */
     public String getString(String path) {
         String value = configuration.getString(path, "");
         if (value.contains("%prefix%")) {
@@ -77,6 +93,7 @@ public class Config {
         return configuration.getBoolean(path);
     }
 
+    // Same as getString, but for lists of text (handy for tablist content)
     public List<String> getStringList(String path) {
         return configuration.getStringList(path).stream()
                 .map(line -> {
