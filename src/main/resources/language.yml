@@ -1,0 +1,15 @@
+#█████▀█████████████████████████████████████████████
+#█─▄▄▄▄█▄─▄▄▀█▄─▄▄─██▀▄─██─▄─▄─███─▄─▄─██▀▄─██▄─▄─▀█
+#█─██▄─██─▄─▄██─▄█▀██─▀─████─███████─████─▀─███─▄─▀█
+#▀▄▄▄▄▄▀▄▄▀▄▄▀▄▄▄▄▄▀▄▄▀▄▄▀▀▄▄▄▀▀▀▀▀▄▄▄▀▀▄▄▀▄▄▀▄▄▄▄▀▀
+
+no-permission: "&cYou do not have permission to execute this command."
+unknown-subcommand: "&cUnknown subcommand. Use &b/greattab &7for help."
+
+help:
+  - "&b&lGreatTab &7by &fdiamondclass"
+  - "&3■ &7/greattab reload &7- &fReload the configuration."
+
+reload:
+  success: "%prefix%&aThe configuration has been reloaded successfully!"
+

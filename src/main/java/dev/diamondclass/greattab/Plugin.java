@@ -2,11 +2,23 @@ package dev.diamondclass.greattab;
 
 import org.bukkit.plugin.java.JavaPlugin;
 import dev.diamondclass.greattab.utils.CC;
+import dev.diamondclass.greattab.modules.frameworks.CommandManager;
+import dev.diamondclass.greattab.modules.frameworks.Config;
+import lombok.Getter;
 
+@Getter
 public class Plugin extends JavaPlugin {
+
+    private Config settingsConfig;
+    private Config languageConfig;
+    private CommandManager commandManager;
 
     @Override
     public void onEnable() {
+        this.settingsConfig = new Config(this, "config.yml");
+        this.languageConfig = new Config(this, "language.yml");
+        this.commandManager = new CommandManager(this);
+
         getLogger().info(CC.translate("&7&m-----------------------------"));
         getLogger().info(CC.translate("&b&lGreatTab"));
         getLogger().info(CC.translate("&7"));
