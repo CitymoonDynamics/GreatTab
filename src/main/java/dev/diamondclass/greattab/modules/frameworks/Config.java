@@ -51,6 +51,17 @@ public class Config {
         if (value.contains("%prefix%")) {
             value = value.replace("%prefix%", plugin.getSettingsConfig().getConfiguration().getString("prefix", ""));
         }
+
+        if (plugin.getSettingsConfig().getConfiguration().contains("variables")) {
+            for (String key : plugin.getSettingsConfig().getConfiguration().getConfigurationSection("variables")
+                    .getKeys(false)) {
+                if (value.contains(key)) {
+                    value = value.replace(key,
+                            plugin.getSettingsConfig().getConfiguration().getString("variables." + key));
+                }
+            }
+        }
+
         return CC.translate(value);
     }
 
@@ -68,6 +79,16 @@ public class Config {
                     if (line.contains("%prefix%")) {
                         line = line.replace("%prefix%",
                                 plugin.getSettingsConfig().getConfiguration().getString("prefix", ""));
+                    }
+
+                    if (plugin.getSettingsConfig().getConfiguration().contains("variables")) {
+                        for (String key : plugin.getSettingsConfig().getConfiguration()
+                                .getConfigurationSection("variables").getKeys(false)) {
+                            if (line.contains(key)) {
+                                line = line.replace(key, plugin.getSettingsConfig().getConfiguration()
+                                        .getString("variables." + key));
+                            }
+                        }
                     }
                     return CC.translate(line);
                 })

@@ -4,3 +4,7 @@
 #▀▄▄▄▄▄▀▄▄▀▄▄▀▄▄▄▄▄▀▄▄▀▄▄▀▀▄▄▄▀▀▀▀▀▄▄▄▀▀▄▄▀▄▄▀▄▄▄▄▀▀
 
 prefix: "&b&lGreatTab &8» &7"
+
+variables:
+  "{rank}": "%vault_prefix%"
+  "{website}": "&bwww.citymoon.es"
