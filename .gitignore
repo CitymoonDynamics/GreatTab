@@ -27,3 +27,7 @@ replay_pid*
 .gradle/
 build/
 bin
+
+# IDEs
+.vscode
+.idea
