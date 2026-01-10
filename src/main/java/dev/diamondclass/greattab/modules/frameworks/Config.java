@@ -62,6 +62,10 @@ public class Config {
             }
         }
 
+        if (plugin.getAnimationManager() != null) {
+            value = plugin.getAnimationManager().parseAnimations(value);
+        }
+
         return CC.translate(value);
     }
 
@@ -90,8 +94,14 @@ public class Config {
                             }
                         }
                     }
+
+                    if (plugin.getAnimationManager() != null) {
+                        line = plugin.getAnimationManager().parseAnimations(line);
+                    }
+
                     return CC.translate(line);
                 })
                 .collect(Collectors.toList());
     }
+
 }

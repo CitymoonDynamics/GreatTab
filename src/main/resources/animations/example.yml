@@ -1,0 +1,18 @@
+rainbow:
+  interval: 2
+  frames:
+    - "&cGreatTab"
+    - "&6GreatTab"
+    - "&eGreatTab"
+    - "&aGreatTab"
+    - "&bGreatTab"
+    - "&dGreatTab"
+    - "&5GreatTab"
+
+blink:
+  interval: 10
+  frames:
+    - "&f&lBLINK"
+    - "&7&lBLINK"
+    - "&8&lBLINK"
+    - "&7&lBLINK"

@@ -20,6 +20,7 @@ public class Reload {
 
         plugin.getSettingsConfig().reload();
         plugin.getLanguageConfig().reload();
+        plugin.getAnimationManager().loadAnimations();
         sender.sendMessage(plugin.getLanguageConfig().getString("reload.success"));
     }
 }
