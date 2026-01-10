@@ -12,13 +12,13 @@ Proof of concept about a tab plugin
 
 ## To-do
 
-[] Finish the HCF layout system.
-[] Add tablist system (ofc)
-[] Add scoreboard system
-[] Add actionbar system
-[] Add title system
-[] Add bossbar system
-[] Create an order for players
+- [ ] Finish the HCF layout system.
+- [ ] Add tablist system (ofc)
+- [ ] Add scoreboard system
+- [ ] Add actionbar system
+- [ ] Add title system
+- [ ] Add bossbar system
+- [ ] Create an order for players
 
 ## Installation
 
