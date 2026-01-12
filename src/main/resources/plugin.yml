@@ -4,3 +4,7 @@ main: dev.diamondclass.greattab.Plugin
 authors: [Citymoon Dynamics]
 description: A tablist plugin for my own purposes.
 depend: [PlaceholderAPI]
+commands:
+  greattab:
+    description: Main command for GreatTab.
+    aliases: [gt, tab]

@@ -67,42 +67,28 @@ public class PacketLayoutAdapter {
     public static void createFakePlayer(Player player, UUID uuid, String name, String displayText,
             SkinManager.Skin skin) {
         try {
-
-            // TODO: 1.19+ introduced chat signing and profile keys, changing the packet
-            // structure significantly.
-            // For now, we are skipping this logic for newer versions.
             if (VERSION.contains("1_19") || VERSION.contains("1_20") || VERSION.contains("1_21")) {
                 return;
             }
 
-            // Create the GameProfile (com.mojang.authlib.GameProfile)
-            // This object holds the UUID, Name, and Textures of the player.
             Object profile = gameProfileClass.getConstructor(UUID.class, String.class).newInstance(uuid, name);
 
-            // Add Property (Texture)
-            // Add Property (Texture)
             if (skin != null) {
                 Object propertyMap = gameProfileClass.getMethod("getProperties").invoke(profile);
                 Class<?> propertyClass = Class.forName("com.mojang.authlib.properties.Property");
-                // Constructor (name, value, signature)
                 Object property = propertyClass.getConstructor(String.class, String.class, String.class)
                         .newInstance("textures", skin.getValue(), skin.getSignature());
 
-                // Put into multimap
                 Method putMethod = propertyMap.getClass().getMethod("put", Object.class, Object.class);
                 putMethod.invoke(propertyMap, "textures", property);
             }
 
             Object packet = packetClass.newInstance();
 
-            // Set action to ADD_PLAYER
             Field actionField = packetClass.getDeclaredField("a");
             actionField.setAccessible(true);
             actionField.set(packet, Enum.valueOf((Class<Enum>) packetActionClass, "ADD_PLAYER"));
 
-            // Create PlayerInfoData
-            // Constructor varies by version
-            // 1.8: (GameProfile, int latency, EnumGamemode, IChatBaseComponent)
             Object textComponent = getChatComponent(displayText);
             Object gameMode = getNMSClass("WorldSettings$EnumGamemode").getField("SURVIVAL").get(null);
 
@@ -118,6 +104,37 @@ public class PacketLayoutAdapter {
 
             sendPacket(player, packet);
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void removePlayer(Player player, UUID uuid) {
+        try {
+            if (VERSION.contains("1_19") || VERSION.contains("1_20") || VERSION.contains("1_21")) {
+                return;
+            }
+
+            Object profile = gameProfileClass.getConstructor(UUID.class, String.class).newInstance(uuid, "");
+            Object packet = packetClass.newInstance();
+
+            Field actionField = packetClass.getDeclaredField("a");
+            actionField.setAccessible(true);
+            actionField.set(packet, Enum.valueOf((Class<Enum>) packetActionClass, "REMOVE_PLAYER"));
+
+            Object gameMode = getNMSClass("WorldSettings$EnumGamemode").getField("SURVIVAL").get(null);
+
+            Constructor<?> dataConstructor = packetDataClass.getConstructor(packetClass, gameProfileClass, int.class,
+                    getNMSClass("WorldSettings$EnumGamemode"), chatBaseComponentClass);
+            Object data = dataConstructor.newInstance(packet, profile, 0, gameMode, null);
+
+            Field dataField = packetClass.getDeclaredField("b");
+            dataField.setAccessible(true);
+
+            List list = (List) dataField.get(packet);
+            list.add(data);
+
+            sendPacket(player, packet);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -27,18 +27,18 @@ public class ScoreboardTeamAdapter {
             Object packet = packetClass.newInstance();
 
             setField(packet, "a", teamName);
-            setField(packet, "h", mode);
+            setField(packet, "h", mode); // h is mode/action in 1.8.8
 
             if (mode == 0 || mode == 2) {
                 setField(packet, "b", teamName);
                 setField(packet, "c", prefix);
                 setField(packet, "d", suffix);
-                setField(packet, "e", "always");
-                setField(packet, "f", 0);
+                setField(packet, "e", "always"); // Visibility
+                setField(packet, "f", 0); // Friendly fire / Pack option (int)
             }
 
             if (mode == 0 || mode == 3 || mode == 4) {
-                setField(packet, "g", entries);
+                setField(packet, "g", entries); // g is the members Collection in 1.8.8
             }
 
             sendPacket(player, packet);

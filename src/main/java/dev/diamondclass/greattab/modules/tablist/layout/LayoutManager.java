@@ -26,18 +26,33 @@ public class LayoutManager {
     // constantly
     private final Map<UUID, FakeSlot[]> viewCache = new HashMap<>();
     private boolean isEnabled;
+    private org.bukkit.scheduler.BukkitTask task;
 
     /**
      * Initializes the system, loads skins, and starts the background update task
      * if the layout is enabled in the config.
      */
     public void load() {
+        if (task != null) {
+            task.cancel();
+            task = null;
+        }
+
         this.isEnabled = plugin.getTabManager().getTabConfig().getBoolean("layout.enabled");
         if (isEnabled) {
             SkinManager.load(plugin.getTabManager().getTabConfig());
             // Every second (20 ticks), we refresh what players see on their tab
-            Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, this::tick, 20L, 20L);
+            this.task = Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, this::tick, 20L, 20L);
+        } else {
+            // If it was enabled and now it's not, we should probably clear the tab for
+            // players
+            // but for simplicity we'll just stop the task for now.
+            viewCache.clear();
         }
+    }
+
+    public void reload() {
+        this.load();
     }
 
     // Just loops through everyone online and updates their view
@@ -47,6 +62,8 @@ public class LayoutManager {
 
         for (Player player : Bukkit.getOnlinePlayers()) {
             updatePlayerView(player);
+            // We remove real players from the tablist so only the 80 fake slots are visible
+            removeRealPlayers(player);
         }
     }
 
@@ -86,6 +103,7 @@ public class LayoutManager {
             if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
                 text = me.clip.placeholderapi.PlaceholderAPI.setPlaceholders(player, text);
             }
+            text = plugin.getAnimationManager().parseAnimations(text);
             text = CC.translate(text);
 
             updateSlot(player, slot, text, SkinManager.getSkin(skinName));
@@ -114,6 +132,16 @@ public class LayoutManager {
     }
 
     /**
+     * Sends the packet to remove real players from the tablist for a specific
+     * viewer.
+     */
+    private void removeRealPlayers(Player viewer) {
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            PacketLayoutAdapter.removePlayer(viewer, player.getUniqueId());
+        }
+    }
+
+    /**
      * Updates the text for a specific slot by modifying the Scoreboard Team
      * prefix/suffix.
      */
@@ -130,12 +158,19 @@ public class LayoutManager {
 
         if (text.length() > 16) {
             prefix = text.substring(0, 16);
-            if (prefix.endsWith("&")) { // Don't split in the middle of a color code
+            if (prefix.endsWith("\u00a7")) { // Don't split in the middle of a color code
                 prefix = prefix.substring(0, 15);
                 suffix = text.substring(15);
             } else {
                 suffix = text.substring(16);
             }
+
+            // In 1.8, the color from the prefix doesn't carry over to the suffix
+            // automatically.
+            // We need to find the last color code in the prefix and prepend it to the
+            // suffix.
+            String lastColors = org.bukkit.ChatColor.getLastColors(prefix);
+            suffix = lastColors + suffix;
 
             if (suffix.length() > 16) {
                 suffix = suffix.substring(0, 16); // Hard cap for compatibility

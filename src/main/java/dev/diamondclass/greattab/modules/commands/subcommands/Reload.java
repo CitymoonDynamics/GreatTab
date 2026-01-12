@@ -22,6 +22,8 @@ public class Reload {
         plugin.getLanguageConfig().reload();
         plugin.getAnimationManager().loadAnimations();
         plugin.getTabManager().reload();
+        plugin.getLayoutManager().reload();
+
         sender.sendMessage(plugin.getLanguageConfig().getString("reload.success"));
     }
 }

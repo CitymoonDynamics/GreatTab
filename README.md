@@ -12,8 +12,8 @@ Proof of concept about a tab plugin
 
 ## To-do
 
-- [X] Finish the HCF layout system.
 - [X] Add tablist system (ofc)
+- [ ] Fix that tablist system doesn't display nothing when is HCF mode enabled
 - [ ] Add scoreboard system
 - [ ] Add actionbar system
 - [ ] Add title system

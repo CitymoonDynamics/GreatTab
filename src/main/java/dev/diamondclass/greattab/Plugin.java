@@ -1,5 +1,6 @@
 package dev.diamondclass.greattab;
 
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import dev.diamondclass.greattab.utils.CC;
 import dev.diamondclass.greattab.modules.frameworks.CommandManager;
@@ -40,27 +41,29 @@ public class Plugin extends JavaPlugin {
         // CommandManager usually goes last so it can access everything we just set up
         this.commandManager = new CommandManager(this);
 
+        this.layoutManager.load();
+
         // Just a nice little console message to show the plugin is up and running
-        getLogger().info(CC.translate("&7&m-----------------------------"));
-        getLogger().info(CC.translate("&b&lGreatTab"));
-        getLogger().info(CC.translate("&7"));
-        getLogger().info(CC.translate("&7Author: " + this.getDescription().getAuthors()));
-        getLogger().info(CC.translate("&7Version: " + this.getDescription().getVersion()));
-        getLogger().info(CC.translate("&7"));
-        getLogger().info(CC.translate("&7The plugin has been &aenabled&7!"));
-        getLogger().info(CC.translate("&7&m-----------------------------"));
+        Bukkit.getConsoleSender().sendMessage(CC.translate("&7&m-----------------------------"));
+        Bukkit.getConsoleSender().sendMessage(CC.translate("&b&lGreatTab"));
+        Bukkit.getConsoleSender().sendMessage(CC.translate("&7"));
+        Bukkit.getConsoleSender().sendMessage(CC.translate("&7Author: " + this.getDescription().getAuthors()));
+        Bukkit.getConsoleSender().sendMessage(CC.translate("&7Version: " + this.getDescription().getVersion()));
+        Bukkit.getConsoleSender().sendMessage(CC.translate("&7"));
+        Bukkit.getConsoleSender().sendMessage(CC.translate("&7The plugin has been &aenabled&7!"));
+        Bukkit.getConsoleSender().sendMessage(CC.translate("&7&m-----------------------------"));
     }
 
     @Override
     public void onDisable() {
         // Clean shutdown message
-        getLogger().info(CC.translate("&7&m-----------------------------"));
-        getLogger().info(CC.translate("&b&lGreatTab"));
-        getLogger().info(CC.translate("&7"));
-        getLogger().info(CC.translate("&7Author: " + this.getDescription().getAuthors()));
-        getLogger().info(CC.translate("&7Version: " + this.getDescription().getVersion()));
-        getLogger().info(CC.translate("&7"));
-        getLogger().info(CC.translate("&7The plugin has been &cdisabled&7!"));
-        getLogger().info(CC.translate("&7&m-----------------------------"));
+        Bukkit.getConsoleSender().sendMessage(CC.translate("&7&m-----------------------------"));
+        Bukkit.getConsoleSender().sendMessage(CC.translate("&b&lGreatTab"));
+        Bukkit.getConsoleSender().sendMessage(CC.translate("&7"));
+        Bukkit.getConsoleSender().sendMessage(CC.translate("&7Author: " + this.getDescription().getAuthors()));
+        Bukkit.getConsoleSender().sendMessage(CC.translate("&7Version: " + this.getDescription().getVersion()));
+        Bukkit.getConsoleSender().sendMessage(CC.translate("&7"));
+        Bukkit.getConsoleSender().sendMessage(CC.translate("&7The plugin has been &cdisabled&7!"));
+        Bukkit.getConsoleSender().sendMessage(CC.translate("&7&m-----------------------------"));
     }
 }
