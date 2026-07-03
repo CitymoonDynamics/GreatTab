@@ -82,4 +82,4 @@ Usage: `<animation:rainbow>`
 ## Support
 
 For support, please contact to Citymoon Dynamics using our website.
-https://citymoon.es
+https://citymoon.org
